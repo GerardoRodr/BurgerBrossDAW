@@ -2,6 +2,7 @@ package com.cibertec.model;
 
 import java.math.BigDecimal;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -10,11 +11,17 @@ import jakarta.persistence.Table;
 @Table(name="tb_productos")
 public class Producto {
 	@Id
+	@Column(name = "id_producto")
 	private int idProducto;
+	@Column(name = "nombre_producto")
 	private String nombreProducto;
+	@Column(name = "id_categoria_prod")
 	private int idCategoriaProd;
+	@Column(name = "desc_prod")
 	private String descProd;
+	@Column(name = "stock")
 	private int stock;
+	@Column(name = "precio_producto")
 	private BigDecimal precioProducto;
 	
 	public int getIdProducto() {
