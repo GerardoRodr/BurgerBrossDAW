@@ -97,47 +97,25 @@
 			</div>
 			<!-- ACA EMPIEZA EL CONTENIDO DENTRO DE LA PAGINA -->
 			<div class="col py-3">
-				<h1>Listado de Pedidos</h1>
-				<table class="table">
+				<h1>Usuarios</h1>
+				<table class="table table-hover">
 					<thead>
 						<tr>
 							<th scope="col">ID</th>
-							<th scope="col">Total</th>
-							<th scope="col">Cliente</th>
-							<th scope="col">Fecha</th>
-							<th scope="col">Estado</th>
-							<th scope="col">Detalle</th>
-							<th scope="col">Cambiar Estado</th>
+							<th scope="col">Usuario</th>
+							<th scope="col">Contraseña</th>
+							<th scope="col">Rol</th>
 						</tr>
 					</thead>
 					<tbody>
-						<th:block th:each="p : ${lstPedidos}">
+						<th:block th:each="u : ${lstUsuarios}">
 							<tr>
-								<td scope="row" th:text="${p.id_pedido}"></td>
-								<td scope="row" th:text="${p.total_pedido}"></td>
-								<td scope="row" th:text="${p.nombre_cliente}"></td>
-								<td scope="row" th:text="${p.fecha_pedido}"></td>
+								<td scope="row" th:text="${u.id_usuario}"></td>
+								<td scope="row" th:text="${u.usuario}"></td>
+								<td scope="row" th:text="${u.password}"></td>
 								<td scope="row">
-									<span th:if="${p.estado_pedido}" class="text-success">Entregado</span>
-									<span th:unless="${p.estado_pedido}" class="text-warning">Pendiente</span>
-								</td>
-								<td scope="row">
-									<form action="/">
-										<button type="submit" class="btn btn-primary"><i
-												class="fs-5 bi-receipt"></i></button>
-									</form>
-								</td>
-								<td scope="row">
-									<div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 container p-0">
-										<form action="/" class="col-sm-3">
-											<button type="submit" class="btn btn-success"><i
-													class="fs-5 bi-check"></i></button>
-										</form>
-										<form action="/" class="col-sm-3">
-											<button type="submit" class="btn btn-warning"><i
-													class="fs-5 bi-clock-history"></i></button>
-										</form>
-									</div>
+									<span th:if="${u.id_rol == 1}">Cocina</span>
+									<span th:if="${u.id_rol == 2}">Mesero</span>
 								</td>
 							</tr>
 						</th:block>
