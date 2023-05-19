@@ -23,7 +23,7 @@
 							<a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
 								<i class="fs-4 bi-receipt"></i> <span class="ms-1 d-none d-sm-inline">Pedidos</span>
 							</a>
-							<ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+							<ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
 								<li class="w-100">
 									<a href="/" class="nav-link px-0"> Todos </a>
 								</li>
@@ -42,18 +42,22 @@
 							<a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
 								<i class="fs-4 bi-box-seam"></i> <span
 									class="ms-1 d-none d-sm-inline">Productos</span></a>
-							<ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+							<!-- AQUI DEBERIA IR DENTRO DE LAS CLASES "SHOW" PARA QUE ESTE EXPANDIDO EL MENU -->
+							<ul class="collapse show nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
 								<li class="w-100">
-									<a href="/listadoProductos" class="nav-link px-0"> Stock </a>
+									<a href="/listadoProductos" class="nav-link px-0"> Todos </a>
 								</li>
 								<li>
-									<a href="#" class="nav-link px-0"> Nuevo </a>
+									<a href="#" class="nav-link px-0"> Hamburguesas </a>
 								</li>
 								<li>
-									<a href="#" class="nav-link px-0"> Actualizar </a>
+									<a href="#" class="nav-link px-0"> Bebidas </a>
 								</li>
 								<li>
-									<a href="#" class="nav-link px-0"> Eliminar </a>
+									<a href="#" class="nav-link px-0"> Complementos </a>
+								</li>
+								<li>
+									<a href="#" class="nav-link px-0"> Adicionales </a>
 								</li>
 							</ul>
 						</li>
@@ -63,7 +67,7 @@
 							</a>
 							<ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
 								<li>
-									<a href="#" class="nav-link px-0"> Todos </a>
+									<a href="/listadoUsuarios" class="nav-link px-0"> Todos </a>
 								</li>
 								<li>
 									<a href="#" class="nav-link px-0"> Nuevo </a>
@@ -107,6 +111,8 @@
 							<th>Descripcion</th>
 							<th>Stock</th>
 							<th>Precio</th>
+							<th>Editar</th>
+							<th>Eliminar</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -118,6 +124,18 @@
 								<td class="text-break" th:text="${p.descProd}"></td>
 								<td th:text="${p.stock}"></td>
 								<td th:text="${p.precioProducto}"></td>
+								<td>
+									<form action="/">
+										<button type="submit" class="btn btn-primary"><i
+												class="fs-5 bi-pencil-square"></i></button>
+									</form>
+								</td>
+								<td>
+									<form action="/">
+										<button type="submit" class="btn btn-danger"><i
+												class="fs-5 bi-trash"></i></button>
+									</form>
+								</td>
 							</tr>
 						</th:block>
 					</tbody>

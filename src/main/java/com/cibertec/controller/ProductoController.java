@@ -12,8 +12,32 @@ public class ProductoController {
 	private IProductoRepository prodRepo;
 	
 	@GetMapping("/listadoProductos")
-	public String listado(Model m) {
+	public String todos(Model m) {
 		m.addAttribute("lstProds", prodRepo.findAll());
 		return "listadoProductos";
+	}
+	
+	@GetMapping("/productosHamburguesas")
+	public String listHamburguesas(Model m) {
+		m.addAttribute("lstProdsHamb", prodRepo.findByIdCategoriaProd(1));
+		return "listadoProductosHamburguesas";
+	}
+	
+	@GetMapping("/productosBebidas")
+	public String listBebidas(Model m) {
+		m.addAttribute("lstProdsHamb", prodRepo.findByIdCategoriaProd(2));
+		return "listadoProductosBebidas";
+	}
+	
+	@GetMapping("/productosComplementos")
+	public String listComplementos(Model m) {
+		m.addAttribute("lstProdsHamb", prodRepo.findByIdCategoriaProd(3));
+		return "listadoProductosComplementos";
+	}
+	
+	@GetMapping("/productosAdicionales")
+	public String listAdicionales(Model m) {
+		m.addAttribute("lstProdsHamb", prodRepo.findByIdCategoriaProd(4));
+		return "listadoProductosAdicionales";
 	}
 }

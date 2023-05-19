@@ -23,7 +23,7 @@
 							<a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
 								<i class="fs-4 bi-receipt"></i> <span class="ms-1 d-none d-sm-inline">Pedidos</span>
 							</a>
-							<ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+							<ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
 								<li class="w-100">
 									<a href="/" class="nav-link px-0"> Todos </a>
 								</li>
@@ -61,9 +61,10 @@
 							<a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
 								<i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Usuarios</span>
 							</a>
-							<ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
+							<!-- AQUI DEBERIA IR DENTRO DE LAS CLASES "SHOW" PARA QUE ESTE EXPANDIDO EL MENU -->
+							<ul class="collapse show nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
 								<li>
-									<a href="#" class="nav-link px-0"> Todos </a>
+									<a href="/listadoUsuarios" class="nav-link px-0"> Todos </a>
 								</li>
 								<li>
 									<a href="#" class="nav-link px-0"> Nuevo </a>
