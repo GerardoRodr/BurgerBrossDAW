@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.cibertec.model.Producto;
@@ -69,4 +70,13 @@ public class ProductoController {
 		
 		return "listadoProductos";
 	}
+	
+	@GetMapping("/editarProducto/{id}")
+	public String editarProducto(Model m, @PathVariable(value="idProd") int id) {
+		m.addAttribute("catProd", catProdRepo.findAll());
+		m.addAttribute("producto", new Producto());
+		System.out.println(id);
+		return "editarProducto";
+	}
+	
 }
