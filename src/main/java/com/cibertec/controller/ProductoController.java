@@ -67,9 +67,7 @@ public class ProductoController {
 			e.printStackTrace();
 		}
 		
-		m.addAttribute("lstProds", prodRepo.findAll());
-		
-		return "listadoProductos";
+		return "redirect:/listadoProductos";
 	}
 	
 	@GetMapping("/editarProducto")
@@ -80,4 +78,26 @@ public class ProductoController {
 		return "editarProducto";
 	}
 	
+	@PostMapping("/editarProducto")
+	public String editarProductoPost(@ModelAttribute Producto producto, Model m) {
+		try {
+			prodRepo.save(producto);
+		} catch (Exception e) {
+			m.addAttribute("mensaje", "Hubo un error en el registro.");
+			e.printStackTrace();
+		}
+		
+		return "redirect:/listadoProductos";
+	}	
+	
+	@PostMapping("/eliminarProducto")
+	public String eliminarProducto(Model m, @RequestParam("idProd") Long idProd) {
+		try {
+			prodRepo.deleteById(idProd);
+		} catch (Exception e) {
+			m.addAttribute("mensaje", "Recuerda que para eliminar un producto debes asegurarte de que este no exista en algun pedido.");
+		}
+		
+		return "redirect:/listadoProductos";
+	}
 }

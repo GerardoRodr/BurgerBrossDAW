@@ -112,6 +112,7 @@
 				</div>
 
 				<form class="ms-4 me-4" th:action="@{/editarProducto}" th:object="${producto}" method="post">
+					<input th:field="*{idProducto}" type="hidden" class="form-control" id="idProducto" required>
 					<div class="form-group mb-2">
 						<label for="nombreProducto">Nombre</label>
 						<input th:field="*{nombreProducto}" type="text" class="form-control" id="nombreProducto"
@@ -139,7 +140,7 @@
 						<input th:field="*{precioProducto}" type="number" class="form-control" id="precioProducto"
 							placeholder="Introduce el precio del producto" required step="0.01">
 					</div>
-					<button type="submit" class="btn btn-primary">Registrar Producto</button>
+					<button type="submit" class="btn btn-primary">Editar Producto</button>
 				</form>
 			</div>
 		</div>

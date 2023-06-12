@@ -105,6 +105,12 @@
 			<!-- ACA EMPIEZA EL CONTENIDO DENTRO DE LA PAGINA -->
 			<div class="col py-3">
 				<h1>Productos</h1>
+
+				<!-- SE MUESTRA UN MENSAJE -->
+				<div th:if="${mensaje}" class="alert alert-danger">
+					<p class="m-0" th:text="${mensaje}"></p>
+				</div>
+
 				<table class="table table-hover">
 					<thead>
 						<tr>
@@ -128,17 +134,19 @@
 								<td th:text="${p.stock}"></td>
 								<td th:text="${p.precioProducto}"></td>
 								<td>
-									<form action="/">
+									<form th:action="@{/editarProducto}" method="get">
+										<input th:value="${p.idProducto}" type="hidden" name="idProd" />
 										<button type="submit" class="btn btn-primary"><i
 												class="fs-5 bi-pencil-square"></i></button>
 									</form>
 								</td>
 								<td>
-									<form action="/">
-										<button type="submit" class="btn btn-danger"><i
-												class="fs-5 bi-trash"></i></button>
+									<form th:action="@{/eliminarProducto}" method="post">
+										<input th:value="${p.idProducto}" type="hidden" name="idProd" />
+										<button onclick="return confirm('¿Estás seguro de eliminar este producto?')"
+											type="submit" class="btn btn-danger"><i class="fs-5 bi-trash"></i></button>
 									</form>
-								</td>								
+								</td>
 							</tr>
 						</th:block>
 					</tbody>
@@ -150,4 +158,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 	crossorigin="anonymous"></script>
+
 </html>

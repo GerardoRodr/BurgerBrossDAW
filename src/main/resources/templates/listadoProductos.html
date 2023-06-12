@@ -105,6 +105,12 @@
 			<!-- ACA EMPIEZA EL CONTENIDO DENTRO DE LA PAGINA -->
 			<div class="col py-3">
 				<h1>Productos</h1>
+				
+				<!-- SE MUESTRA UN MENSAJE -->
+				<div th:if="${mensaje}" class="alert alert-danger">
+					<p class="m-0" th:text="${mensaje}"></p>
+				</div>
+				
 				<table class="table table-hover">
 					<thead>
 						<tr>
@@ -135,9 +141,9 @@
 									</form>
 								</td>
 								<td>
-									<form action="/">
-										<input th:value="${p.idProducto}" type="hidden" id="idProdDel"/>
-										<button type="submit" class="btn btn-danger"><i
+									<form th:action="@{/eliminarProducto}" method="post">
+										<input th:value="${p.idProducto}" type="hidden" name="idProd"/>
+										<button onclick="return confirm('¿Estás seguro de eliminar este producto?')" type="submit" class="btn btn-danger"><i
 												class="fs-5 bi-trash"></i></button>
 									</form>
 								</td>
