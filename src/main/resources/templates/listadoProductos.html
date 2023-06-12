@@ -128,15 +128,15 @@
 								<td th:text="${p.stock}"></td>
 								<td th:text="${p.precioProducto}"></td>
 								<td>
-									<form th:action="@{/editarProducto}">
-										<input th:value="${p.idProducto}" type="hidden" />
+									<form th:action="@{/editarProducto}" method="get">
+										<input th:value="${p.idProducto}" type="hidden" name="idProd" />
 										<button type="submit" class="btn btn-primary"><i
 												class="fs-5 bi-pencil-square"></i></button>
 									</form>
 								</td>
 								<td>
 									<form action="/">
-										<input th:value="${p.idProducto}" type="hidden" />
+										<input th:value="${p.idProducto}" type="hidden" id="idProdDel"/>
 										<button type="submit" class="btn btn-danger"><i
 												class="fs-5 bi-trash"></i></button>
 									</form>

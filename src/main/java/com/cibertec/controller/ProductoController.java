@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cibertec.model.Producto;
 import com.cibertec.repository.ICategoriaProductosRepository;
@@ -71,11 +72,11 @@ public class ProductoController {
 		return "listadoProductos";
 	}
 	
-	@GetMapping("/editarProducto/{id}")
-	public String editarProducto(Model m, @PathVariable(value="idProd") int id) {
+	@GetMapping("/editarProducto")
+	public String editarProducto(Model m, @RequestParam("idProd") Long idProd) {
 		m.addAttribute("catProd", catProdRepo.findAll());
-		m.addAttribute("producto", new Producto());
-		System.out.println(id);
+		m.addAttribute("producto", prodRepo.findById(idProd));
+		
 		return "editarProducto";
 	}
 	
