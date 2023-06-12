@@ -12,4 +12,5 @@ SELECT * FROM tb_pedidos;
 SELECT * FROM tb_detalle_pedido;
 SELECT * FROM tb_usuarios;
 SELECT * FROM tb_roles;
-SELECT * FROM tb_categoria_productos
+SELECT * FROM tb_categoria_productos;
+SELECT * FROM tb_productos;
