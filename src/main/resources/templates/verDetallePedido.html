@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 
 <head>
-	<title>Nuevo Pedido</title>
+	<title>BurgerBross</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -23,12 +23,12 @@
 							<a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
 								<i class="fs-4 bi-receipt"></i> <span class="ms-1 d-none d-sm-inline">Pedidos</span>
 							</a>
-							<ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+							<ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
 								<li class="w-100">
 									<a href="/" class="nav-link px-0"> Todos </a>
 								</li>
 								<li class="w-100">
-									<a href="/nuevoPedido1" class="nav-link px-0"> Nuevo </a>
+									<a href="/nuevoPedidoNombre" class="nav-link px-0"> Nuevo </a>
 								</li>
 								<li>
 									<a href="#" class="nav-link px-0"> Actualizar </a>
@@ -43,7 +43,7 @@
 								<i class="fs-4 bi-box-seam"></i> <span
 									class="ms-1 d-none d-sm-inline">Productos</span></a>
 							<!-- AQUI DEBERIA IR DENTRO DE LAS CLASES "SHOW" PARA QUE ESTE EXPANDIDO EL MENU -->
-							<ul class="collapse show nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+							<ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
 								<li class="w-100">
 									<a href="/nuevoProducto" class="nav-link px-0"> Nuevo </a>
 								</li>
@@ -104,27 +104,28 @@
 			</div>
 			<!-- ACA EMPIEZA EL CONTENIDO DENTRO DE LA PAGINA -->
 			<div class="col py-3">
-				<h1 class="m-2">Nuevo Pedido (<span th:text="${nombreCliente}"></span>)</h1>
-
-				<form class="ms-4 me-4" th:action="@{/nuevoPedidoSiguiente}" method="post" th:object="${det_pedido}">
-					<input th:value="${nombreCliente}" type="hidden" name="nombreCliente">
-					<div class="form-group mb-2">
-						<label for="idProducto">Producto</label>
-						<select th:field="*{id_producto}" class="form-control form-select" id="id_producto" required>
-							<option th:each="p : ${selProd}" th:value="${p.idProducto}" th:text="${p.nombreProducto}"></option>
-						</select>
-					</div>
-
-					<div class="form-group mb-2">
-						<label for="cantidad">Cantidad</label>
-						<input th:field="*{cantidad}" type="number" class="form-control" id="cantidad"
-							placeholder="Introduce la cantidad del producto" required step="1">
-					</div>
-					<button type="submit" class="btn btn-primary">
-						<i class="bi bi-arrow-right-circle"></i>
-						Continuar
-						</button>					
-				</form>
+				<h1>Detalle del Pedido (<span th:text="${nombreCliente}"></span>)</h1>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th scope="col">Producto</th>
+							<th scope="col">Precio</th>
+							<th scope="col">Cantidad</th>
+							<th scope="col">Subtotal</th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:each="p : ${lstDetPedidos}">
+							<tr>
+								<td scope="row" th:text="${p.nombreProducto}"></td>
+								<td scope="row" th:text="${p.precio_producto}"></td>
+								<td scope="row" th:text="${p.cantidad}"></td>
+								<td scope="row" th:text="${p.subtotal}"></td>								
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
+				<h6 class="fst-italic d-flex justify-content-end">Total: S/<span th:text="${totalPedido}"></span></h6>
 			</div>
 		</div>
 	</div>

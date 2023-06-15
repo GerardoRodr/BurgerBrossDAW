@@ -28,7 +28,7 @@
 									<a href="/" class="nav-link px-0"> Todos </a>
 								</li>
 								<li class="w-100">
-									<a href="/nuevoPedido1" class="nav-link px-0"> Nuevo </a>
+									<a href="/nuevoPedidoNombre" class="nav-link px-0"> Nuevo </a>
 								</li>
 								<li>
 									<a href="#" class="nav-link px-0"> Actualizar </a>
@@ -129,18 +129,23 @@
 									<span th:unless="${p.estado_pedido}" class="text-warning">Pendiente</span>
 								</td>
 								<td scope="row">
-									<form action="/">
+									<form action="/verDetallePedido" method="get">
+										<input type="hidden" th:value="${p.id_pedido}" name="idPedido">
 										<button type="submit" class="btn btn-primary"><i
 												class="fs-5 bi-receipt"></i></button>
 									</form>
 								</td>
 								<td scope="row">
 									<div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 container p-0">
-										<form action="/" class="col-sm-3">
+										<form th:action="@{/cambiarEstado}" class="col-sm-3" method="post">
+											<input type="hidden" th:value="${p.id_pedido}" name="idPedido">
+											<input type="hidden" value="true" name="estado">
 											<button type="submit" class="btn btn-success"><i
 													class="fs-5 bi-check"></i></button>
 										</form>
-										<form action="/" class="col-sm-3">
+										<form th:action="@{/cambiarEstado}" class="col-sm-3" method="post">
+											<input type="hidden" th:value="${p.id_pedido}" name="idPedido">
+											<input type="hidden" value="false" name="estado">
 											<button type="submit" class="btn btn-warning"><i
 													class="fs-5 bi-clock-history"></i></button>
 										</form>

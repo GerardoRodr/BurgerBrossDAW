@@ -106,13 +106,16 @@
 			<div class="col py-3">
 				<h1 class="m-2">Nuevo Pedido</h1>
 
-				<form class="ms-4 me-4" th:action="@{/nuevoPedido2}" th:object="${producto}" method="get">
+				<form class="ms-4 me-4" th:action="@{/nuevoPedido}" th:object="${producto}" method="get">
 					<div class="form-group mb-2">
 						<label for="nombreCliente">Nombre del Cliente</label>
 						<input type="text" class="form-control" id="nombreCliente" name="nombreCliente"
 							placeholder="Introduce el nombre del cliente" required maxlength="145">
 					</div>
-					<button type="submit" class="btn btn-primary">Continuar</button>
+					<button type="submit" class="btn btn-primary">
+						<i class="bi bi-arrow-right-circle"></i>
+						Continuar
+						</button>
 				</form>
 			</div>
 		</div>

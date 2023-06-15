@@ -125,6 +125,34 @@
 						Continuar
 						</button>					
 				</form>
+				<form th:action="@{/finalizarPedido}" method="post" class="ms-4 me-4 mt-2">
+					<input th:value="${nombreCliente}" type="hidden" name="nombreCliente">
+					<button type="submit" class="btn btn-success">
+						<i class="bi bi-check-circle"></i>
+						Finalizar Pedido
+						</button>	
+				</form>
+				
+				<table class="table table-hover mt-3">
+					<thead>
+						<tr>
+							<th>Producto</th>
+							<th>Precio</th>
+							<th>Cantidad</th>
+							<th>Subtotal</th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:each="p : ${listaPedidosTemp}">
+							<tr>
+								<td th:text="${p.nombreProducto}"></td>
+								<td th:text="${p.precio_producto}"></td>
+								<td th:text="${p.cantidad}"></td>
+								<td th:text="${p.subtotal}"></td>
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>

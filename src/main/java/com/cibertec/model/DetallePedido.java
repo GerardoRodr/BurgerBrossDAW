@@ -19,7 +19,7 @@ public class DetallePedido {
 	private int id_detalle_pedido;
 	
 	@Column(name = "id_pedido")
-	private int id_pedido;
+	private int idPedido;
 	
 	@Column(name = "id_producto")
 	private int id_producto;
@@ -41,12 +41,12 @@ public class DetallePedido {
 		this.id_detalle_pedido = id_detalle_pedido;
 	}
 
-	public int getId_pedido() {
-		return id_pedido;
+	public int getIdPedido() {
+		return idPedido;
 	}
 
-	public void setId_pedido(int id_pedido) {
-		this.id_pedido = id_pedido;
+	public void setIdPedido(int idPedido) {
+		this.idPedido = idPedido;
 	}
 
 	public int getId_producto() {
