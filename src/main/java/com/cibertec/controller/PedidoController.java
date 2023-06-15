@@ -34,6 +34,8 @@ public class PedidoController {
 	
 	List<DetallePedidoTemp> tempDetPed = new ArrayList<>();
 	
+	private String tempNombreCliente = null;
+	
 	@GetMapping("/")
 	public String index(Model m) {
 		m.addAttribute("lstPedidos", pedidoRepo.findAll());
@@ -41,8 +43,17 @@ public class PedidoController {
 	}
 	
 	@GetMapping("/nuevoPedidoNombre")
-	public String nuevoPedido1() {
-		return "nuevoPedidoNombre";
+	public String nuevoPedido1(RedirectAttributes r) {
+		String paginaDestino = "";
+		
+		if(tempNombreCliente != null && tempDetPed.isEmpty() == false) {
+			r.addAttribute("nombreCliente", tempNombreCliente);
+			paginaDestino = "redirect:/nuevoPedidoFinalizar";
+		} else {
+			paginaDestino = "nuevoPedidoNombre";
+		}
+		
+		return paginaDestino;
 	}
 	
 	@GetMapping("/nuevoPedido")
@@ -51,6 +62,8 @@ public class PedidoController {
 
 		m.addAttribute("nombreCliente", nombreCliente);
 		
+		tempNombreCliente = nombreCliente;
+		
 		m.addAttribute("det_pedido", new DetallePedidoTemp());
 		
 		return "nuevoPedidoProducto";
@@ -58,7 +71,7 @@ public class PedidoController {
 	
 	private DetallePedidoTemp llenarDetalle(DetallePedidoTemp det) {
 		DetallePedidoTemp detFinal = new DetallePedidoTemp();
-		Producto p = prodRepo.findById((long) det.getId_producto()).orElse(new Producto());
+		Producto p = prodRepo.findById(det.getId_producto()).orElse(new Producto());
 		detFinal.setId_producto(det.getId_producto());
 		detFinal.setNombreProducto(p.getNombreProducto());
 		detFinal.setPrecio_producto(p.getPrecioProducto());
@@ -141,5 +154,17 @@ public class PedidoController {
 		pedidoRepo.save(p);
 		
 		return "redirect:/";
+	}
+	
+	@GetMapping("/gestionarPedidos")
+	public String gestionarPedido(Model m) {	
+		m.addAttribute("lstPedidos", pedidoRepo.findAll());
+		return "gestionarPedidos";
+	}
+	
+	@PostMapping("/limpiarNuevoPedido")
+	public String limpiarNuevoPedido() {
+		tempDetPed.clear();	
+		return "redirect:/nuevoPedidoNombre";
 	}
 }

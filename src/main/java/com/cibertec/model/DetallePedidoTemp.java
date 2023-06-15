@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 public class DetallePedidoTemp {
 	
+	private int idDetallePedido;
+	
 	private int id_producto;
 	
 	private String nombreProducto;
@@ -52,5 +54,13 @@ public class DetallePedidoTemp {
 
 	public void setSubtotal(BigDecimal subtotal) {
 		this.subtotal = subtotal;
+	}
+
+	public int getIdDetallePedido() {
+		return idDetallePedido;
+	}
+
+	public void setIdDetallePedido(int idDetallePedido) {
+		this.idDetallePedido = idDetallePedido;
 	}
 }

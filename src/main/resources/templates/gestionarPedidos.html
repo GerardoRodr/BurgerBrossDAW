@@ -31,10 +31,7 @@
 									<a href="/nuevoPedidoNombre" class="nav-link px-0"> Nuevo </a>
 								</li>
 								<li>
-									<a href="#" class="nav-link px-0"> Actualizar </a>
-								</li>
-								<li>
-									<a href="#" class="nav-link px-0"> Eliminar </a>
+									<a href="/gestionarPedidos" class="nav-link px-0"> Gestionar </a>
 								</li>
 							</ul>
 						</li>
@@ -75,12 +72,6 @@
 								<li class="w-100">
 									<a href="#" class="nav-link px-0"> Nuevo </a>
 								</li>
-								<li class="w-100">
-									<a href="#" class="nav-link px-0"> Actualizar </a>
-								</li>
-								<li class="w-100">
-									<a href="#" class="nav-link px-0"> Eliminar </a>
-								</li>
 							</ul>
 						</li>
 					</ul>
@@ -104,7 +95,7 @@
 			</div>
 			<!-- ACA EMPIEZA EL CONTENIDO DENTRO DE LA PAGINA -->
 			<div class="col py-3">
-				<h1>Listado de Pedidos</h1>
+				<h1>Gestionar Pedidos</h1>
 				<table class="table table-hover">
 					<thead>
 						<tr>
@@ -136,11 +127,11 @@
 									</form>
 								</td>
 								<td scope="row">
-									<form action="/cambiarEstado" class="col-sm-3" method="post">
+									<form th:action="@{/eliminarPedido}" class="col-sm-3" method="post">
 										<input type="hidden" th:value="${p.id_pedido}" name="idPedido">
 										<input type="hidden" value="true" name="estado">
-										<button type="submit" class="btn btn-success"><i
-												class="fs-5 bi-check"></i></button>
+										<button type="submit" class="btn btn-danger"><i
+												class="fs-5 bi-trash"></i></button>
 									</form>
 								</td>
 							</tr>

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cibertec.model.Producto;
 import com.cibertec.repository.ICategoriaProductosRepository;
@@ -70,7 +71,7 @@ public class ProductoController {
 	}
 	
 	@GetMapping("/editarProducto")
-	public String editarProducto(Model m, @RequestParam("idProd") Long idProd) {
+	public String editarProducto(Model m, @RequestParam("idProd") int idProd) {
 		m.addAttribute("catProd", catProdRepo.findAll());
 		m.addAttribute("producto", prodRepo.findById(idProd));
 		
@@ -87,14 +88,14 @@ public class ProductoController {
 		}
 		
 		return "redirect:/listadoProductos";
-	}	
+	}
 	
 	@PostMapping("/eliminarProducto")
-	public String eliminarProducto(Model m, @RequestParam("idProd") Long idProd) {
+	public String eliminarProducto(RedirectAttributes m, @RequestParam("idProd") int idProd) {
 		try {
 			prodRepo.deleteById(idProd);
 		} catch (Exception e) {
-			m.addAttribute("mensaje", "Recuerda que para eliminar un producto debes asegurarte de que este no exista en algun pedido.");
+			m.addFlashAttribute("mensaje", "Recuerda que para eliminar un producto debes asegurarte de que este no exista en algun pedido.");
 		}
 		
 		return "redirect:/listadoProductos";

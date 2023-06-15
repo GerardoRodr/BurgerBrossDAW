@@ -22,7 +22,7 @@ public class DetallePedido {
 	private int idPedido;
 	
 	@Column(name = "id_producto")
-	private int id_producto;
+	private int idProducto;
 	
 	@Column(name = "precio_producto")
 	private BigDecimal precio_producto;
@@ -50,11 +50,11 @@ public class DetallePedido {
 	}
 
 	public int getId_producto() {
-		return id_producto;
+		return idProducto;
 	}
 
 	public void setId_producto(int id_producto) {
-		this.id_producto = id_producto;
+		this.idProducto = id_producto;
 	}
 
 	public BigDecimal getPrecio_producto() {

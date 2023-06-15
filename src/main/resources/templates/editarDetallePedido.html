@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 
 <head>
-	<title>Listado</title>
+	<title>Editar</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -23,7 +23,7 @@
 							<a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
 								<i class="fs-4 bi-receipt"></i> <span class="ms-1 d-none d-sm-inline">Pedidos</span>
 							</a>
-							<ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+							<ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
 								<li class="w-100">
 									<a href="/" class="nav-link px-0"> Todos </a>
 								</li>
@@ -40,7 +40,7 @@
 								<i class="fs-4 bi-box-seam"></i> <span
 									class="ms-1 d-none d-sm-inline">Productos</span></a>
 							<!-- AQUI DEBERIA IR DENTRO DE LAS CLASES "SHOW" PARA QUE ESTE EXPANDIDO EL MENU -->
-							<ul class="collapse show nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+							<ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
 								<li class="w-100">
 									<a href="/nuevoProducto" class="nav-link px-0"> Nuevo </a>
 								</li>
@@ -95,53 +95,30 @@
 			</div>
 			<!-- ACA EMPIEZA EL CONTENIDO DENTRO DE LA PAGINA -->
 			<div class="col py-3">
-				<h1>Productos</h1>
-				
+				<h1 class="m-2">Editar Pedido</h1>
+
 				<!-- SE MUESTRA UN MENSAJE -->
-				<div th:if="${mensaje}" class="alert alert-danger">
-					<p class="m-0"> <i class="bi bi-exclamation-diamond"></i> <span th:text="${mensaje}"></span> </p>
+				<div th:if="${mensaje}" class="alert alert-success">
+					<p class="m-0" th:text="${mensaje}"></p>
 				</div>
-				
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>Producto</th>
-							<th>Categoria</th>
-							<th>Descripcion</th>
-							<th>Stock</th>
-							<th>Precio</th>
-							<th>Editar</th>
-							<th>Eliminar</th>
-						</tr>
-					</thead>
-					<tbody>
-						<th:block th:each="p : ${lstProds}">
-							<tr>
-								<td th:text="${p.idProducto}"></td>
-								<td th:text="${p.nombreProducto}"></td>
-								<td th:text="${p.idCategoriaProd}"></td>
-								<td class="text-break" th:text="${p.descProd}"></td>
-								<td th:text="${p.stock}"></td>
-								<td th:text="${p.precioProducto}"></td>
-								<td>
-									<form th:action="@{/editarProducto}" method="get">
-										<input th:value="${p.idProducto}" type="hidden" name="idProd" />
-										<button type="submit" class="btn btn-primary"><i
-												class="fs-5 bi-pencil-square"></i></button>
-									</form>
-								</td>
-								<td>
-									<form th:action="@{/eliminarProducto}" method="post">
-										<input th:value="${p.idProducto}" type="hidden" name="idProd"/>
-										<button onclick="return confirm('¿Estás seguro de eliminar este producto?')" type="submit" class="btn btn-danger"><i
-												class="fs-5 bi-trash"></i></button>
-									</form>
-								</td>
-							</tr>
-						</th:block>
-					</tbody>
-				</table>
+
+				<form class="ms-4 me-4" th:action="@{/editarDetallePedido}" th:object="${det_ped}" method="post">
+					<input type="hidden" th:field="*{id_detalle_pedido}" >
+					<input type="hidden" th:field="*{idPedido}">
+					<div class="form-group mb-2">
+						<label for="id_producto">Producto</label>
+						<select th:field="*{id_producto}" class="form-control form-select" id="id_producto" required>
+							<option th:each="p : ${selProd}" th:value="${p.idProducto}" th:text="${p.nombreProducto}"></option>
+						</select>
+					</div>
+
+					<div class="form-group mb-2">
+						<label for="cantidad">Cantidad</label>
+						<input th:field="*{cantidad}" type="number" class="form-control" id="cantidad"
+							placeholder="Introduce la cantidad del producto" required step="1">
+					</div>
+					<button type="submit" class="btn btn-primary">Editar Pedido</button>
+				</form>
 			</div>
 		</div>
 	</div>

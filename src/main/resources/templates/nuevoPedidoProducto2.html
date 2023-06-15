@@ -23,18 +23,15 @@
 							<a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
 								<i class="fs-4 bi-receipt"></i> <span class="ms-1 d-none d-sm-inline">Pedidos</span>
 							</a>
-							<ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+							<ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
 								<li class="w-100">
 									<a href="/" class="nav-link px-0"> Todos </a>
 								</li>
 								<li class="w-100">
-									<a href="/nuevoPedido1" class="nav-link px-0"> Nuevo </a>
+									<a href="/nuevoPedidoNombre" class="nav-link px-0"> Nuevo </a>
 								</li>
 								<li>
-									<a href="#" class="nav-link px-0"> Actualizar </a>
-								</li>
-								<li>
-									<a href="#" class="nav-link px-0"> Eliminar </a>
+									<a href="/gestionarPedidos" class="nav-link px-0"> Gestionar </a>
 								</li>
 							</ul>
 						</li>
@@ -43,7 +40,7 @@
 								<i class="fs-4 bi-box-seam"></i> <span
 									class="ms-1 d-none d-sm-inline">Productos</span></a>
 							<!-- AQUI DEBERIA IR DENTRO DE LAS CLASES "SHOW" PARA QUE ESTE EXPANDIDO EL MENU -->
-							<ul class="collapse show nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+							<ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
 								<li class="w-100">
 									<a href="/nuevoProducto" class="nav-link px-0"> Nuevo </a>
 								</li>
@@ -74,12 +71,6 @@
 								</li>
 								<li class="w-100">
 									<a href="#" class="nav-link px-0"> Nuevo </a>
-								</li>
-								<li class="w-100">
-									<a href="#" class="nav-link px-0"> Actualizar </a>
-								</li>
-								<li class="w-100">
-									<a href="#" class="nav-link px-0"> Eliminar </a>
 								</li>
 							</ul>
 						</li>
@@ -118,20 +109,32 @@
 					<div class="form-group mb-2">
 						<label for="cantidad">Cantidad</label>
 						<input th:field="*{cantidad}" type="number" class="form-control" id="cantidad"
-							placeholder="Introduce la cantidad del producto" required step="1">
+							placeholder="Introduce la cantidad del producto" required step="1" min="1">
 					</div>
 					<button type="submit" class="btn btn-primary">
 						<i class="bi bi-arrow-right-circle"></i>
 						Continuar
 						</button>					
 				</form>
-				<form th:action="@{/finalizarPedido}" method="post" class="ms-4 me-4 mt-2">
-					<input th:value="${nombreCliente}" type="hidden" name="nombreCliente">
-					<button type="submit" class="btn btn-success">
-						<i class="bi bi-check-circle"></i>
-						Finalizar Pedido
-						</button>	
-				</form>
+				
+				<div class="container mt-2">
+					<div class="row">
+						<form th:action="@{/finalizarPedido}" method="post" class="col-10">
+							<input th:value="${nombreCliente}" type="hidden" name="nombreCliente">
+							<button type="submit" class="btn btn-success">
+								<i class="bi bi-check-circle"></i>
+								Finalizar Pedido
+								</button>	
+						</form>
+						
+						<form th:action="@{/limpiarNuevoPedido}" method="post" class="col">
+							<button type="submit" class="btn btn-danger">
+								<i class="bi bi-backspace"></i>
+								Limpiar Pedido
+								</button>	
+						</form>
+					</div>
+				</div>
 				
 				<table class="table table-hover mt-3">
 					<thead>
