@@ -2,7 +2,8 @@
 <html xmlns:th="https://www.thymeleaf.org">
 
 <head>
-	<title>BurgerBross</title>
+	<title>Gestionar Pedidos</title>
+	<link rel="icon" type="image/x-icon" href="/favicon.png" />
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -127,7 +128,7 @@
 									</form>
 								</td>
 								<td scope="row">
-									<form th:action="@{/eliminarPedido}" class="col-sm-3" method="post">
+									<form th:action="@{/eliminarPedido}" onclick="return confirm('¿Estás seguro de eliminar este pedido?')" class="col-sm-3" method="post">
 										<input type="hidden" th:value="${p.id_pedido}" name="idPedido">
 										<input type="hidden" value="true" name="estado">
 										<button type="submit" class="btn btn-danger"><i
