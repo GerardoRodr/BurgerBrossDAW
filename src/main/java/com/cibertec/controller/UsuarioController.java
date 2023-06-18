@@ -54,8 +54,15 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/listadoUsuarios")
-	public String index(Model m) {
-		m.addAttribute("lstUsuarios", repo.findAll());
-		return "listadoUsuarios";
+	public String index(Model m, @CookieValue(value = "sesion", required = false) String sesion) {
+		String url;
+		
+		if (sesion != null) {
+			m.addAttribute("lstUsuarios", repo.findAll());
+			url = "listadoUsuarios";
+		} else {
+			url = "redirect:/";
+		}
+		return url;
 	}
 }

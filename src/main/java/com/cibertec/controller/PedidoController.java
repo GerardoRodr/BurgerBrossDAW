@@ -51,30 +51,42 @@ public class PedidoController {
 	}
 	
 	@GetMapping("/nuevoPedidoNombre")
-	public String nuevoPedido1(RedirectAttributes r) {
-		String paginaDestino = "";
+	public String nuevoPedido1(RedirectAttributes r, @CookieValue(value = "sesion", required = false) String sesion) {		
+		String url;
 		
-		if(tempNombreCliente != null && tempDetPed.isEmpty() == false) {
-			r.addAttribute("nombreCliente", tempNombreCliente);
-			paginaDestino = "redirect:/nuevoPedidoFinalizar";
+		if (sesion != null) {		
+			if(tempNombreCliente != null && tempDetPed.isEmpty() == false) {
+				r.addAttribute("nombreCliente", tempNombreCliente);
+				url = "redirect:/nuevoPedidoFinalizar";
+			} else {
+				url = "nuevoPedidoNombre";
+			}
 		} else {
-			paginaDestino = "nuevoPedidoNombre";
+			url = "redirect:/";
 		}
 		
-		return paginaDestino;
+		return url;
 	}
 	
 	@GetMapping("/nuevoPedido")
-	public String nuevoPedido2(Model m, @RequestParam("nombreCliente") String nombreCliente) {
-		m.addAttribute("selProd", prodRepo.findAll());
-
-		m.addAttribute("nombreCliente", nombreCliente);
+	public String nuevoPedido2(Model m, @RequestParam("nombreCliente") String nombreCliente, @CookieValue(value = "sesion", required = false) String sesion) {
+		String url;
 		
-		tempNombreCliente = nombreCliente;
+		if (sesion != null) {
+			m.addAttribute("selProd", prodRepo.findAll());
+	
+			m.addAttribute("nombreCliente", nombreCliente);
+			
+			tempNombreCliente = nombreCliente;
+			
+			m.addAttribute("det_pedido", new DetallePedidoTemp());
+			
+			url = "nuevoPedidoProducto";
+		} else {
+			url = "redirect:/";
+		}
 		
-		m.addAttribute("det_pedido", new DetallePedidoTemp());
-		
-		return "nuevoPedidoProducto";
+		return url;
 	}
 	
 	private DetallePedidoTemp llenarDetalle(DetallePedidoTemp det) {
@@ -97,17 +109,23 @@ public class PedidoController {
 	}
 	
 	@GetMapping("/nuevoPedidoFinalizar")
-	public String nuevoPedido3(Model m, @RequestParam("nombreCliente") String nombreCliente) {
+	public String nuevoPedido3(Model m, @RequestParam("nombreCliente") String nombreCliente, @CookieValue(value = "sesion", required = false) String sesion) {
+		String url;
 		
-		m.addAttribute("selProd", prodRepo.findAll());
-		
-		m.addAttribute("nombreCliente", nombreCliente);
-		
-		m.addAttribute("det_pedido", new DetallePedido());
-		
-		m.addAttribute("listaPedidosTemp", tempDetPed);
-		
-		return "nuevoPedidoProducto2";
+		if (sesion != null) {		
+			m.addAttribute("selProd", prodRepo.findAll());
+			
+			m.addAttribute("nombreCliente", nombreCliente);
+			
+			m.addAttribute("det_pedido", new DetallePedido());
+			
+			m.addAttribute("listaPedidosTemp", tempDetPed);
+			
+			url = "nuevoPedidoProducto2";
+		} else {
+			url = "redirect:/";
+		}
+		return url;
 	}
 	
 	private BigDecimal calcularTotal(List<DetallePedidoTemp> list) {
@@ -161,13 +179,22 @@ public class PedidoController {
 		//GUARDAMOS LOS CAMBIOS
 		pedidoRepo.save(p);
 		
+		//-------------------------ELIMINACION DE STOCK-------------------------------
+		
 		return "redirect:/";
 	}
 	
 	@GetMapping("/gestionarPedidos")
-	public String gestionarPedido(Model m) {	
-		m.addAttribute("lstPedidos", pedidoRepo.findAll());
-		return "gestionarPedidos";
+	public String gestionarPedido(Model m, @CookieValue(value = "sesion", required = false) String sesion) {	
+		String url;
+		
+		if (sesion != null) {
+			m.addAttribute("lstPedidos", pedidoRepo.findAll());
+			url = "gestionarPedidos";
+		} else {
+			url = "redirect:/";
+		}
+		return url;
 	}
 	
 	@PostMapping("/limpiarNuevoPedido")

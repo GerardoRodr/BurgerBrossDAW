@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,35 +55,59 @@ public class DetallePedidoController {
 	}
 	
 	@GetMapping("/verDetallePedido")
-	public String verDetallePedido(Model m, @RequestParam("idPedido") int idPedido) {
+	public String verDetallePedido(Model m, @RequestParam("idPedido") int idPedido, @CookieValue(value = "sesion", required = false) String sesion) {
+		String url;
 		
-		Pedido p = pedidoRepo.findById(idPedido).orElse(new Pedido());
+		if (sesion != null) {	
+			Pedido p = pedidoRepo.findById(idPedido).orElse(new Pedido());
+			
+			m.addAttribute("totalPedido", p.getTotal_pedido());
+			m.addAttribute("nombreCliente", p.getNombre_cliente());
+			m.addAttribute("lstDetPedidos", llenarDetallePedidoTemp(idPedido));
 		
-		m.addAttribute("totalPedido", p.getTotal_pedido());
-		m.addAttribute("nombreCliente", p.getNombre_cliente());
-		m.addAttribute("lstDetPedidos", llenarDetallePedidoTemp(idPedido));
+			url = "verDetallePedido";
+		}
+		else {
+			url = "redirect:/";
+		}
 		
-		return "verDetallePedido";
+		return url;
 	}
 	
 	@GetMapping("/editarPedido")
-	public String editarPedido(@RequestParam("idPedido") int idPedido, Model m) {
+	public String editarPedido(@RequestParam("idPedido") int idPedido, Model m, @CookieValue(value = "sesion", required = false) String sesion) {
+		String url;
 		
-		Pedido p = pedidoRepo.findById(idPedido).orElse(new Pedido());
+		if (sesion != null) {	
+			Pedido p = pedidoRepo.findById(idPedido).orElse(new Pedido());
+			
+			m.addAttribute("totalPedido", p.getTotal_pedido());
+			m.addAttribute("nombreCliente", p.getNombre_cliente());
+			m.addAttribute("lstDetPedidos", llenarDetallePedidoTemp(idPedido));
+			
+			url = "editarPedido";
+		} else {
+			url = "redirect:/";
+		}
+
 		
-		m.addAttribute("totalPedido", p.getTotal_pedido());
-		m.addAttribute("nombreCliente", p.getNombre_cliente());
-		m.addAttribute("lstDetPedidos", llenarDetallePedidoTemp(idPedido));
-		
-		return "editarPedido";
+		return url;
 	}
 	
 	@GetMapping("/editarDetallePedido")
-	public String editarDetallePedido(@RequestParam("idDetPedido") int idDetPedido, @RequestParam("idProducto") int idProducto, Model m) {
-		m.addAttribute("selProd", prodRepo.findAll());
-		m.addAttribute("det_ped", detPedidoRepo.findById(idDetPedido));
+	public String editarDetallePedido(@RequestParam("idDetPedido") int idDetPedido, @RequestParam("idProducto") int idProducto, Model m, @CookieValue(value = "sesion", required = false) String sesion) {
+		String url;
 		
-		return "editarDetallePedido";
+		if (sesion != null) {	
+			m.addAttribute("selProd", prodRepo.findAll());
+			m.addAttribute("det_ped", detPedidoRepo.findById(idDetPedido));
+			
+			url = "editarDetallePedido";
+		} else {
+			url = "redirect:/";
+		}
+		
+		return url;
 	}
 	
 	private BigDecimal calcularTotal(List<DetallePedido> list) {
