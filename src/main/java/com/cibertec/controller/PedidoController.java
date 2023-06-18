@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,10 +37,17 @@ public class PedidoController {
 	
 	private String tempNombreCliente = null;
 	
-	@GetMapping("/")
-	public String index(Model m) {
-		m.addAttribute("lstPedidos", pedidoRepo.findAll());
-		return "index";
+	@GetMapping("/index")
+	public String index(Model m, @CookieValue(value = "sesion", required = false) String sesion) {
+		String url;
+		
+		if (sesion != null) {
+			url = "index";
+			m.addAttribute("lstPedidos", pedidoRepo.findAll());
+		} else {
+			url = "redirect:/";
+		}
+		return url;
 	}
 	
 	@GetMapping("/nuevoPedidoNombre")
