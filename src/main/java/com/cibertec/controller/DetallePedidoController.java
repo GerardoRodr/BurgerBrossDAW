@@ -18,9 +18,11 @@ import com.cibertec.model.DetallePedido;
 import com.cibertec.model.DetallePedidoTemp;
 import com.cibertec.model.Pedido;
 import com.cibertec.model.Producto;
+import com.cibertec.model.Usuario;
 import com.cibertec.repository.IDetallePedidoRepository;
 import com.cibertec.repository.IPedidoRepository;
 import com.cibertec.repository.IProductoRepository;
+import com.cibertec.repository.IUsuarioRepository;
 
 @Controller
 public class DetallePedidoController {
@@ -32,6 +34,9 @@ public class DetallePedidoController {
 	
 	@Autowired
 	private IProductoRepository prodRepo;
+	
+	@Autowired
+	private IUsuarioRepository repoUsuario;
 	
 	private List<DetallePedidoTemp> llenarDetallePedidoTemp(int idPedido) {
 		
@@ -58,7 +63,10 @@ public class DetallePedidoController {
 	public String verDetallePedido(Model m, @RequestParam("idPedido") int idPedido, @CookieValue(value = "sesion", required = false) String sesion) {
 		String url;
 		
-		if (sesion != null) {	
+		Usuario u = repoUsuario.findById(Integer.parseInt(sesion)).orElse(new Usuario());
+		
+		if (sesion != null) {
+			m.addAttribute("usuario", u.getNombreUsuario());
 			Pedido p = pedidoRepo.findById(idPedido).orElse(new Pedido());
 			
 			m.addAttribute("totalPedido", p.getTotal_pedido());
@@ -78,7 +86,10 @@ public class DetallePedidoController {
 	public String editarPedido(@RequestParam("idPedido") int idPedido, Model m, @CookieValue(value = "sesion", required = false) String sesion) {
 		String url;
 		
-		if (sesion != null) {	
+		Usuario u = repoUsuario.findById(Integer.parseInt(sesion)).orElse(new Usuario());
+		
+		if (sesion != null) {
+			m.addAttribute("usuario", u.getNombreUsuario());
 			Pedido p = pedidoRepo.findById(idPedido).orElse(new Pedido());
 			
 			m.addAttribute("totalPedido", p.getTotal_pedido());
@@ -98,7 +109,10 @@ public class DetallePedidoController {
 	public String editarDetallePedido(@RequestParam("idDetPedido") int idDetPedido, @RequestParam("idProducto") int idProducto, Model m, @CookieValue(value = "sesion", required = false) String sesion) {
 		String url;
 		
-		if (sesion != null) {	
+		Usuario u = repoUsuario.findById(Integer.parseInt(sesion)).orElse(new Usuario());
+		
+		if (sesion != null) {
+			m.addAttribute("usuario", u.getNombreUsuario());	
 			m.addAttribute("selProd", prodRepo.findAll());
 			m.addAttribute("det_ped", detPedidoRepo.findById(idDetPedido));
 			

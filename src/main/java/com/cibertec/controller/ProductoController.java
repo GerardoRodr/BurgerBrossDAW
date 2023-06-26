@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cibertec.model.Producto;
+import com.cibertec.model.Usuario;
 import com.cibertec.repository.ICategoriaProductosRepository;
 import com.cibertec.repository.IProductoRepository;
+import com.cibertec.repository.IUsuarioRepository;
 
 @Controller
 public class ProductoController {
@@ -22,11 +24,17 @@ public class ProductoController {
 	@Autowired
 	private ICategoriaProductosRepository catProdRepo;
 	
+	@Autowired
+	private IUsuarioRepository repoUsuario;
+	
 	@GetMapping("/listadoProductos")
 	public String todos(Model m, @CookieValue(value = "sesion", required = false) String sesion) {
 		String url;
 		
+		Usuario u = repoUsuario.findById(Integer.parseInt(sesion)).orElse(new Usuario());
+		
 		if (sesion != null) {
+			m.addAttribute("usuario", u.getNombreUsuario());
 			m.addAttribute("lstProds", prodRepo.findAll());
 			url = "listadoProductos";
 		} else {
@@ -38,8 +46,10 @@ public class ProductoController {
 	@GetMapping("/productosHamburguesas")
 	public String listHamburguesas(Model m, @CookieValue(value = "sesion", required = false) String sesion) {
 		String url;
+		Usuario u = repoUsuario.findById(Integer.parseInt(sesion)).orElse(new Usuario());
 		
 		if (sesion != null) {
+			m.addAttribute("usuario", u.getNombreUsuario());
 			m.addAttribute("lstProds", prodRepo.findByIdCategoriaProd(1));
 			url = "listadoProductosHamburguesas";
 		}
@@ -52,8 +62,10 @@ public class ProductoController {
 	@GetMapping("/productosBebidas")
 	public String listBebidas(Model m, @CookieValue(value = "sesion", required = false) String sesion) {
 		String url;
+		Usuario u = repoUsuario.findById(Integer.parseInt(sesion)).orElse(new Usuario());
 		
 		if (sesion != null) {
+			m.addAttribute("usuario", u.getNombreUsuario());
 			m.addAttribute("lstProds", prodRepo.findByIdCategoriaProd(2));
 			url = "listadoProductosBebidas";
 		} else {
@@ -65,8 +77,10 @@ public class ProductoController {
 	@GetMapping("/productosComplementos")
 	public String listComplementos(Model m, @CookieValue(value = "sesion", required = false) String sesion) {
 		String url;
+		Usuario u = repoUsuario.findById(Integer.parseInt(sesion)).orElse(new Usuario());
 		
 		if (sesion != null) {
+			m.addAttribute("usuario", u.getNombreUsuario());
 			m.addAttribute("lstProds", prodRepo.findByIdCategoriaProd(3));
 			url = "listadoProductosComplementos";
 		} else {
@@ -78,8 +92,10 @@ public class ProductoController {
 	@GetMapping("/productosAdicionales")
 	public String listAdicionales(Model m, @CookieValue(value = "sesion", required = false) String sesion) {
 		String url;
+		Usuario u = repoUsuario.findById(Integer.parseInt(sesion)).orElse(new Usuario());
 		
 		if (sesion != null) {
+			m.addAttribute("usuario", u.getNombreUsuario());
 			m.addAttribute("lstProds", prodRepo.findByIdCategoriaProd(4));
 			url = "listadoProductosAdicionales";
 		} else {
@@ -91,8 +107,10 @@ public class ProductoController {
 	@GetMapping("/nuevoProducto")
 	public String nuevoProducto(Model m, @CookieValue(value = "sesion", required = false) String sesion) {
 		String url;
+		Usuario u = repoUsuario.findById(Integer.parseInt(sesion)).orElse(new Usuario());
 		
 		if (sesion != null) {
+			m.addAttribute("usuario", u.getNombreUsuario());
 			m.addAttribute("catProd", catProdRepo.findAll());
 			m.addAttribute("producto", new Producto());
 			url = "nuevoProducto";
@@ -117,8 +135,10 @@ public class ProductoController {
 	@GetMapping("/editarProducto")
 	public String editarProducto(Model m, @RequestParam("idProd") int idProd, @CookieValue(value = "sesion", required = false) String sesion) {
 		String url;
+		Usuario u = repoUsuario.findById(Integer.parseInt(sesion)).orElse(new Usuario());
 		
 		if (sesion != null) {
+			m.addAttribute("usuario", u.getNombreUsuario());
 			m.addAttribute("catProd", catProdRepo.findAll());
 			m.addAttribute("producto", prodRepo.findById(idProd));
 			url = "editarProducto";

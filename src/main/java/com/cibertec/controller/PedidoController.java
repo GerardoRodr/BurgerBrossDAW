@@ -18,9 +18,11 @@ import com.cibertec.model.DetallePedido;
 import com.cibertec.model.DetallePedidoTemp;
 import com.cibertec.model.Pedido;
 import com.cibertec.model.Producto;
+import com.cibertec.model.Usuario;
 import com.cibertec.repository.IDetallePedidoRepository;
 import com.cibertec.repository.IPedidoRepository;
 import com.cibertec.repository.IProductoRepository;
+import com.cibertec.repository.IUsuarioRepository;
 
 @Controller
 public class PedidoController {
@@ -33,6 +35,9 @@ public class PedidoController {
 	@Autowired
 	private IDetallePedidoRepository detPedidoRepo;
 	
+	@Autowired
+	private IUsuarioRepository repoUsuario;
+	
 	List<DetallePedidoTemp> tempDetPed = new ArrayList<>();
 	
 	private String tempNombreCliente = null;
@@ -40,8 +45,10 @@ public class PedidoController {
 	@GetMapping("/index")
 	public String index(Model m, @CookieValue(value = "sesion", required = false) String sesion) {
 		String url;
+		Usuario u = repoUsuario.findById(Integer.parseInt(sesion)).orElse(new Usuario());
 		
 		if (sesion != null) {
+			m.addAttribute("usuario", u.getNombreUsuario());
 			url = "index";
 			m.addAttribute("lstPedidos", pedidoRepo.findAll());
 		} else {
@@ -51,10 +58,12 @@ public class PedidoController {
 	}
 	
 	@GetMapping("/nuevoPedidoNombre")
-	public String nuevoPedido1(RedirectAttributes r, @CookieValue(value = "sesion", required = false) String sesion) {		
+	public String nuevoPedido1(Model m, RedirectAttributes r, @CookieValue(value = "sesion", required = false) String sesion) {		
 		String url;
+		Usuario u = repoUsuario.findById(Integer.parseInt(sesion)).orElse(new Usuario());
 		
-		if (sesion != null) {		
+		if (sesion != null) {
+			m.addAttribute("usuario", u.getNombreUsuario());	
 			if(tempNombreCliente != null && tempDetPed.isEmpty() == false) {
 				r.addAttribute("nombreCliente", tempNombreCliente);
 				url = "redirect:/nuevoPedidoFinalizar";
@@ -72,7 +81,10 @@ public class PedidoController {
 	public String nuevoPedido2(Model m, @RequestParam("nombreCliente") String nombreCliente, @CookieValue(value = "sesion", required = false) String sesion) {
 		String url;
 		
+		Usuario u = repoUsuario.findById(Integer.parseInt(sesion)).orElse(new Usuario());
+		
 		if (sesion != null) {
+			m.addAttribute("usuario", u.getNombreUsuario());
 			m.addAttribute("selProd", prodRepo.findAll());
 	
 			m.addAttribute("nombreCliente", nombreCliente);
@@ -112,7 +124,10 @@ public class PedidoController {
 	public String nuevoPedido3(Model m, @RequestParam("nombreCliente") String nombreCliente, @CookieValue(value = "sesion", required = false) String sesion) {
 		String url;
 		
-		if (sesion != null) {		
+		Usuario u = repoUsuario.findById(Integer.parseInt(sesion)).orElse(new Usuario());
+		
+		if (sesion != null) {
+			m.addAttribute("usuario", u.getNombreUsuario());		
 			m.addAttribute("selProd", prodRepo.findAll());
 			
 			m.addAttribute("nombreCliente", nombreCliente);
@@ -180,6 +195,14 @@ public class PedidoController {
 		pedidoRepo.save(p);
 		
 		//-------------------------ELIMINACION DE STOCK-------------------------------
+		List<DetallePedido> dpList = detPedidoRepo.findByIdPedido(idPedido);
+		
+		for (DetallePedido dpItem : dpList) {
+			Producto prod = prodRepo.findById(dpItem.getId_producto()).orElse(new Producto());
+			int cantidadARestar = prod.getStock() - dpItem.getCantidad();
+			prod.setStock(cantidadARestar);
+			prodRepo.save(prod);
+		}
 		
 		return "redirect:/";
 	}
@@ -188,7 +211,10 @@ public class PedidoController {
 	public String gestionarPedido(Model m, @CookieValue(value = "sesion", required = false) String sesion) {	
 		String url;
 		
+		Usuario u = repoUsuario.findById(Integer.parseInt(sesion)).orElse(new Usuario());
+		
 		if (sesion != null) {
+			m.addAttribute("usuario", u.getNombreUsuario());
 			m.addAttribute("lstPedidos", pedidoRepo.findAll());
 			url = "gestionarPedidos";
 		} else {

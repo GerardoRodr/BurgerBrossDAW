@@ -13,25 +13,25 @@ public class Usuario {
 	@Id
 	@Column(name = "id_usuario")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id_usuario;
+	private int idUsuario;
 	@Column(name = "usuario")
-	private String usuario;
+	private String nombreUsuario;
 	@Column(name = "password")
 	private String password;
 	@Column(name = "id_rol")
-	private int id_rol;
+	private int idRol;
 	
-	public int getId_usuario() {
-		return id_usuario;
+	public int getIdUsuario() {
+		return idUsuario;
 	}
-	public void setId_usuario(int id_usuario) {
-		this.id_usuario = id_usuario;
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
 	}
-	public String getUsuario() {
-		return usuario;
+	public String getNombreUsuario() {
+		return nombreUsuario;
 	}
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setNombreUsuario(String nombreUsuario) {
+		this.nombreUsuario = nombreUsuario;
 	}
 	public String getPassword() {
 		return password;
@@ -39,10 +39,10 @@ public class Usuario {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getId_rol() {
-		return id_rol;
+	public int getIdRol() {
+		return idRol;
 	}
-	public void setId_rol(int id_rol) {
-		this.id_rol = id_rol;
+	public void setIdRol(int idRol) {
+		this.idRol = idRol;
 	}
 }

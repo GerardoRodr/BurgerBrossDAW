@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 
 <head>
-	<title>Nuevo Pedido</title>
+	<title>Nuevo Usuario</title>
 	<link rel="icon" type="image/x-icon" href="/favicon.png" />
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -24,7 +24,7 @@
 							<a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
 								<i class="fs-4 bi-receipt"></i> <span class="ms-1 d-none d-sm-inline">Pedidos</span>
 							</a>
-							<ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+							<ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
 								<li class="w-100">
 									<a href="/" class="nav-link px-0"> Todos </a>
 								</li>
@@ -40,7 +40,6 @@
 							<a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
 								<i class="fs-4 bi-box-seam"></i> <span
 									class="ms-1 d-none d-sm-inline">Productos</span></a>
-							<!-- AQUI DEBERIA IR DENTRO DE LAS CLASES "SHOW" PARA QUE ESTE EXPANDIDO EL MENU -->
 							<ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
 								<li class="w-100">
 									<a href="/nuevoProducto" class="nav-link px-0"> Nuevo </a>
@@ -66,7 +65,7 @@
 							<a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
 								<i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Usuarios</span>
 							</a>
-							<ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
+							<ul class="collapse show nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
 								<li class="w-100">
 									<a href="/listadoUsuarios" class="nav-link px-0"> Todos </a>
 								</li>
@@ -95,18 +94,32 @@
 			</div>
 			<!-- ACA EMPIEZA EL CONTENIDO DENTRO DE LA PAGINA -->
 			<div class="col py-3">
-				<h1 class="m-2">Nuevo Pedido</h1>
+				<h1 class="m-2">Nuevo Usuario</h1>
 
-				<form class="ms-4 me-4" th:action="@{/nuevoPedido}" th:object="${producto}" method="get">
+				<!-- SE MUESTRA UN MENSAJE -->
+				<div th:if="${mensaje}" class="alert alert-danger">
+					<p class="m-0" th:text="${mensaje}"></p>
+				</div>
+
+				<form class="ms-4 me-4" th:action="@{/nuevoUsuario}" th:object="${modeloUsuario}" method="post">
 					<div class="form-group mb-2">
-						<label for="nombreCliente">Nombre del Cliente</label>
-						<input type="text" class="form-control" id="nombreCliente" name="nombreCliente"
-							placeholder="Introduce el nombre del cliente" required maxlength="145">
+						<label for="nombreUsuario">Usuario</label>
+						<input th:field="*{nombreUsuario}" type="text" class="form-control" id="nombreUsuario"
+							placeholder="Introduce el usuario" required maxlength="145"
+							>
 					</div>
-					<button type="submit" class="btn btn-primary">
-						<i class="bi bi-arrow-right-circle"></i>
-						Continuar
-						</button>
+					<div class="form-group mb-2">
+						<label for="password">Contraseña</label>
+						<input th:field="*{password}" type="password" class="form-control" id="password"
+							placeholder="Introduce la contraseña" required maxlength="145">
+					</div>
+					<div class="form-group mb-2">
+						<label for="id_rol">Rol</label>
+						<select th:field="*{idRol}" class="form-control form-select" id="idRol" required>
+							<option th:each="r : ${roles}" th:value="${r.id_rol}" th:text="${r.nombre_rol}"></option>
+						</select>
+					</div>
+					<button type="submit" class="btn btn-primary">Nuevo Usuario</button>
 				</form>
 			</div>
 		</div>

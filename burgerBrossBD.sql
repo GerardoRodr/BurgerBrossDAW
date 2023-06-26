@@ -33,7 +33,7 @@ CREATE TABLE tb_detalle_pedido(
     id_producto int, -- 1
     precio_producto decimal(7, 2), -- 23.50
     cantidad int, -- 1
-    subtotal decimal(7, 2) GENERATED ALWAYS AS (precio_producto * cantidad) VIRTUAL,
+    subtotal decimal(7, 2),
     primary key (id_detalle_pedido),
     foreign key (id_pedido) REFERENCES tb_pedidos(id_pedido),
     foreign key (id_producto) REFERENCES tb_productos(id_producto)

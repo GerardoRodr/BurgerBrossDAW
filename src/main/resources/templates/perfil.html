@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 
 <head>
-	<title>Nuevo Pedido</title>
+	<title>BurgerBross</title>
 	<link rel="icon" type="image/x-icon" href="/favicon.png" />
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -95,19 +95,51 @@
 			</div>
 			<!-- ACA EMPIEZA EL CONTENIDO DENTRO DE LA PAGINA -->
 			<div class="col py-3">
-				<h1 class="m-2">Nuevo Pedido</h1>
-
-				<form class="ms-4 me-4" th:action="@{/nuevoPedido}" th:object="${producto}" method="get">
-					<div class="form-group mb-2">
-						<label for="nombreCliente">Nombre del Cliente</label>
-						<input type="text" class="form-control" id="nombreCliente" name="nombreCliente"
-							placeholder="Introduce el nombre del cliente" required maxlength="145">
+				<div class="container-xl px-4">
+					<div class="row">
+						<div class="col-xl-4">
+							<div class="card mb-4 mb-xl-0">
+								<div class="card-header">Perfil</div>
+								<div class="card-body text-center">
+									<i class="bi-person-circle" style="font-size: 137.5px;"></i>
+									<div class="fst-italic text-muted fs-3" th:text="${usuario}"></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-8">
+							<div class="card mb-4">
+								<div class="card-header">Detalles de la cuenta</div>
+								<div class="card-body">
+									<form class="ms-4 me-4" th:action="@{/editarUsuario}" th:object="${usuarioModelo}"
+										method="post">
+										<input th:field="*{idUsuario}" type="hidden" class="form-control" id="idUsuario"
+											required>
+										<div class="form-group mb-2">
+											<label for="nombreUsuario">Usuario</label>
+											<input th:field="*{nombreUsuario}" type="text" class="form-control"
+												id="nombreUsuario" placeholder="Introduce el usuario" required
+												maxlength="145">
+										</div>
+										<div class="form-group mb-2">
+											<label for="password">Contraseña</label>
+											<input th:field="*{password}" type="text" class="form-control" id="password"
+												placeholder="Introduce la contraseña" required maxlength="145">
+										</div>
+										<div class="form-group mb-2">
+											<label for="id_rol">Rol</label>
+											<select th:field="*{idRol}" class="form-control form-select" id="idRol"
+												required>
+												<option th:each="r : ${roles}" th:value="${r.id_rol}"
+													th:text="${r.nombre_rol}"></option>
+											</select>
+										</div>
+										<button type="submit" class="btn btn-primary">Guardar Cambios</button>
+									</form>
+								</div>
+							</div>
+						</div>
 					</div>
-					<button type="submit" class="btn btn-primary">
-						<i class="bi bi-arrow-right-circle"></i>
-						Continuar
-						</button>
-				</form>
+				</div>
 			</div>
 		</div>
 	</div>

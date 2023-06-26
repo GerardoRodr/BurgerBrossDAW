@@ -81,22 +81,21 @@
 						<a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle"
 							id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
 							<i class="fs-3 bi-person-circle"></i>
-							<span class="d-none d-sm-inline mx-1">Admin</span>
+							<span class="d-none d-sm-inline mx-1" th:text="${usuario}">Admin</span>
 						</a>
 						<ul class="dropdown-menu dropdown-menu-light text-small shadow">
-							<li><a class="dropdown-item" href="#">Preferencias</a></li>
-							<li><a class="dropdown-item" href="#">Perfil</a></li>
+							<li><a class="dropdown-item" href="/verPerfil">Perfil</a></li>
 							<li>
 								<hr class="dropdown-divider">
 							</li>
-							<li><a class="dropdown-item" href="#">Cerrar sesion</a></li>
+							<li><a class="dropdown-item" href="/cerrarSesion">Cerrar sesion</a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
 			<!-- ACA EMPIEZA EL CONTENIDO DENTRO DE LA PAGINA -->
 			<div class="col py-3">
-				<h1 class="m-2">Nuevo Producto</h1>
+				<h1 class="m-2">Editar Producto</h1>
 
 				<!-- SE MUESTRA UN MENSAJE -->
 				<div th:if="${mensaje}" class="alert alert-success">
